@@ -47,10 +47,12 @@ h2:first-child { margin-top: 4px; }
 
 /* Kopfzeile */
 #brand {
-  display: flex; align-items: baseline; gap: 8px; max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; gap: 8px; max-width: 1200px; margin: 0 auto;
   padding: calc(10px + env(safe-area-inset-top)) 14px 0;
 }
-#brand .logo { font-size: 1.35rem; font-weight: 900; letter-spacing: -.02em; color: var(--accent); }
+#brand .mark { width: 34px; height: 34px; border-radius: 9px; }
+#brand .logo { font-size: 1.35rem; font-weight: 900; letter-spacing: -.02em; color: #c0392b; }
+@media (prefers-color-scheme: dark) { #brand .logo { color: #ff7b6b; } }
 #brand .by { font-size: .8rem; color: var(--muted); font-style: italic; }
 
 /* Tabs */

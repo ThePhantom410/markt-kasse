@@ -1,12 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#1f6f8b"/>
-  <rect x="136" y="96" width="240" height="320" rx="28" fill="#ffffff"/>
-  <rect x="168" y="132" width="176" height="64" rx="12" fill="#d6ecf3"/>
-  <text x="332" y="178" text-anchor="end" font-family="Arial, sans-serif" font-weight="700" font-size="40" fill="#1f6f8b">€</text>
-  <g fill="#1f6f8b">
-    <rect x="168" y="222" width="48" height="40" rx="8"/><rect x="232" y="222" width="48" height="40" rx="8"/><rect x="296" y="222" width="48" height="40" rx="8"/>
-    <rect x="168" y="278" width="48" height="40" rx="8"/><rect x="232" y="278" width="48" height="40" rx="8"/><rect x="296" y="278" width="48" height="40" rx="8"/>
-    <rect x="168" y="334" width="112" height="40" rx="8"/>
-  </g>
-  <rect x="296" y="334" width="48" height="40" rx="8" fill="#1e8449"/>
+  <rect width="512" height="512" rx="112" fill="#fdf3e3"/>
+  <path d="M96 140h320l-20 70H116z" fill="#c0392b"/>
+  <path d="M136 140h48l-8 70h-40zM232 140h48v70h-48zM328 140h48l16 70h-40z" fill="#fff"/>
+  <path d="M116 210q20 30 40 0q20 30 40 0q20 30 40 0q20 30 40 0q20 30 40 0q20 30 40 0q20 30 40 0q20 30 40 0" fill="#c0392b"/>
+  <rect x="132" y="230" width="16" height="170" fill="#7a4a2a"/>
+  <rect x="364" y="230" width="16" height="170" fill="#7a4a2a"/>
+  <rect x="100" y="316" width="312" height="84" rx="12" fill="#d35400"/>
+  <text x="256" y="372" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="46" fill="#fff">Standkasse</text>
 </svg>

@@ -1,4 +1,4 @@
-# Cashito by Antonio Reyes
+# Standkasse by Antonio Reyes
 
 Rechenhilfe-Kasse für den Marktstand: Produkte antippen, Summe und Rückgeld ablesen – kein Kopfrechnen mehr.
 Läuft im Browser auf Handy und Tablet, lässt sich wie eine App installieren und funktioniert **offline**.

@@ -1,7 +1,7 @@
 'use strict';
 /* Standkasse by Antonio Reyes – Rechenhilfe für den Marktstand. Alle Beträge in Cent. */
 
-const APP_VERSION = 5;
+const APP_VERSION = 6;
 const KEY = 'marktKasse.v1';
 const COLORS = ['#1f6f8b', '#c0392b', '#d35400', '#b9770e', '#1e8449', '#117a65', '#6c3483', '#2c3e50', '#a93226', '#7d6608'];
 const MONEY = [500, 1000, 2000, 5000, 100, 200, 50, 20];
@@ -15,6 +15,10 @@ const DEFAULT_PRODUCTS = [
   ['Räucher-Lachssemmel', 450, 2, false],
   ['Große Tüte Pommes', 400, 7, false],
 ];
+
+/* Läuft als Android-App (Capacitor)? Dann gibt es native Plugins statt Browser-Funktionen. */
+const NATIVE = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+const plugin = name => (NATIVE && window.Capacitor.Plugins[name]) || null;
 
 /* ---------- Helfer ---------- */
 const $ = s => document.querySelector(s);
@@ -233,7 +237,18 @@ function qrImage(text) {
   qr.make();
   return qr.createDataURL(6, 2);
 }
+async function nativeShareFile(name, text) {
+  const fsys = plugin('Filesystem'), share = plugin('Share');
+  if (!fsys || !share) { toast('Teilen nicht verfügbar'); return; }
+  try {
+    const { uri } = await fsys.writeFile({ path: name, data: text, directory: 'CACHE', encoding: 'utf8' });
+    await share.share({ title: name, files: [uri] });
+  } catch (e) {
+    if (!/cancel/i.test(String(e && e.message))) toast('Teilen fehlgeschlagen');
+  }
+}
 function downloadFile(name, text, type) {
+  if (NATIVE) { nativeShareFile(name, text); return; }
   const blob = new Blob([text], { type });
   const file = new File([blob], name, { type });
   if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -518,7 +533,7 @@ function viewEinstellungen() {
     <h2>Über</h2>
     <div class="card">
       <p style="margin-top:0"><b>Standkasse</b> by Antonio Reyes · Version ${APP_VERSION}</p>
-      <p class="muted small">Nur eine <b>Rechenhilfe</b>, keine Registrierkasse (keine TSE). Alle Daten bleiben auf diesem Gerät. Die App funktioniert auch ohne Internet.</p>
+      <p class="muted small">Nur eine <b>Rechenhilfe</b>, keine Registrierkasse (keine TSE). Alle Daten bleiben auf diesem Gerät. Die App funktioniert auch ohne Internet.${NATIVE ? ' (Android-App)' : ''}</p>
       <button class="btn danger" data-act="reset">Alles zurücksetzen</button>
     </div>`;
 }
@@ -534,6 +549,11 @@ function render() {
 let wakeWanted = localStorage.getItem('marktKasse.wake') === '1';
 let wakeLock = null;
 async function applyWake() {
+  const keep = plugin('KeepAwake');
+  if (keep) {
+    try { await (wakeWanted ? keep.keepAwake() : keep.allowSleep()); } catch (e) { /* egal */ }
+    return;
+  }
   try {
     if (wakeWanted && document.visibilityState === 'visible' && 'wakeLock' in navigator && !wakeLock) {
       wakeLock = await navigator.wakeLock.request('screen');
@@ -665,6 +685,15 @@ if (S.day.date !== today() && !S.day.sales.length && !Object.keys(S.imports).len
 save();
 render();
 applyWake();
-if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+/* Android-Zurück-Taste: erst Fenster schließen, dann zur Kasse, dann App in den Hintergrund */
+const appPlugin = plugin('App');
+if (appPlugin) {
+  appPlugin.addListener('backButton', () => {
+    if (!$('#sheet').hidden) { closeSheet(); return; }
+    if (tab !== 'kasse') { tab = 'kasse'; render(); return; }
+    appPlugin.minimizeApp();
+  });
+}
+if (!NATIVE && 'serviceWorker' in navigator && location.protocol !== 'file:') {
   navigator.serviceWorker.register('sw.js').catch(() => {});
 }

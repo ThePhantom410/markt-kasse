@@ -148,6 +148,29 @@ const sum = page => page.textContent('#sum').then(euro);
   await p1.reload();
   ok((await p1.$$('.prod')).length === 7, 'Läuft offline');
 
+  /* Android-App: native Plugins (Capacitor) werden benutzt */
+  const nctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
+  await nctx.addInitScript(() => {
+    window.__calls = [];
+    const rec = name => new Proxy({}, { get: (_, fn) => async (...a) => { window.__calls.push(name + '.' + String(fn)); if (fn === 'writeFile') return { uri: 'file:///cache/x.json' }; if (fn === 'addListener') window.__back = a[1]; return {}; } });
+    window.Capacitor = { isNativePlatform: () => true, Plugins: { Filesystem: rec('Filesystem'), Share: rec('Share'), KeepAwake: rec('KeepAwake'), App: rec('App') } };
+  });
+  const np = await nctx.newPage();
+  np.on('dialog', d => d.accept());
+  await np.goto(url);
+  await np.click('[data-tab=einstellungen]');
+  await np.fill('#devName', 'Tablet');
+  await np.press('#devName', 'Tab');
+  await np.click('[data-act=fileProducts]');
+  await np.check('#wake');
+  await np.click('[data-tab=abrechnung]');
+  await np.evaluate(() => window.__back());
+  const calls = await np.evaluate(() => window.__calls);
+  ok(calls.includes('Filesystem.writeFile') && calls.includes('Share.share'), 'Android: Datei teilen über Filesystem + Share');
+  ok(calls.includes('KeepAwake.keepAwake'), 'Android: Bildschirm anlassen über KeepAwake');
+  ok(await np.evaluate(() => tab) === 'kasse', 'Android: Zurück-Taste führt zur Kasse');
+  ok(await np.evaluate(() => !navigator.serviceWorker.controller), 'Android: kein Service Worker');
+
   await browser.close();
   server.close();
   console.log(fails ? `\n${fails} Fehler` : '\nAlle Tests bestanden');

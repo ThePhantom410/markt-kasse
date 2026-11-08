@@ -1,0 +1,22 @@
+{
+  "name": "standkasse",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Standkasse by Antonio Reyes – Rechenhilfe-Kasse für den Marktstand",
+  "scripts": {
+    "www": "node scripts/www.js",
+    "sync": "npm run www && cap sync android",
+    "test": "node tests/kasse.test.js"
+  },
+  "dependencies": {
+    "@capacitor-community/keep-awake": "8.0.1",
+    "@capacitor/android": "8.5.3",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/core": "8.5.3",
+    "@capacitor/filesystem": "8.1.5",
+    "@capacitor/share": "8.0.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.5.3"
+  }
+}

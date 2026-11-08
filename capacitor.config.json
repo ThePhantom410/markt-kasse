@@ -1,0 +1,8 @@
+{
+  "appId": "de.antonioreyes.standkasse",
+  "appName": "Standkasse",
+  "webDir": "www",
+  "android": {
+    "backgroundColor": "#f3f5f7"
+  }
+}

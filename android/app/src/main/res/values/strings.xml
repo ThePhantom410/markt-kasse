@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Standkasse</string>
+    <string name="title_activity_main">Standkasse</string>
+    <string name="package_name">de.antonioreyes.standkasse</string>
+    <string name="custom_url_scheme">de.antonioreyes.standkasse</string>
+</resources>

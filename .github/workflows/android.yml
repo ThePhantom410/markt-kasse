@@ -1,0 +1,64 @@
+# Baut bei jedem Push auf main die Android-App und legt sie als Release „vNN“ ab (NN = APP_VERSION in app.js).
+name: Android-App bauen
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    env:
+      KEYSTORE_B64: ${{ secrets.STANDKASSE_KEYSTORE_BASE64 }}
+      STANDKASSE_KEYSTORE_PASSWORD: ${{ secrets.STANDKASSE_KEYSTORE_PASSWORD }}
+    steps:
+      - name: Schlüssel vorhanden?
+        run: |
+          if [ -z "$KEYSTORE_B64" ] || [ -z "$STANDKASSE_KEYSTORE_PASSWORD" ]; then
+            echo "::error::Die Secrets STANDKASSE_KEYSTORE_BASE64 und STANDKASSE_KEYSTORE_PASSWORD fehlen (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Android SDK
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;36.0.0" > /dev/null
+
+      - name: Web-App in die Android-App kopieren
+        run: |
+          npm ci
+          npm run sync
+
+      - name: APK bauen und signieren
+        run: |
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/standkasse.p12"
+          export STANDKASSE_KEYSTORE="$RUNNER_TEMP/standkasse.p12"
+          cd android && ./gradlew assembleRelease --no-daemon
+          rm -f "$RUNNER_TEMP/standkasse.p12"
+
+      - name: Als Release hochladen
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VER=$(grep -oP 'const APP_VERSION = \K\d+' app.js)
+          APK="Standkasse-v$VER.apk"
+          cp android/app/build/outputs/apk/release/app-release.apk "$APK"
+          if gh release view "v$VER" > /dev/null 2>&1; then
+            gh release upload "v$VER" "$APK" --clobber
+          else
+            gh release create "v$VER" "$APK" --title "Standkasse v$VER" --notes "Android-App zum Installieren: $APK herunterladen und auf dem Gerät öffnen."
+          fi

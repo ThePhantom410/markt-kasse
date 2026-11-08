@@ -36,3 +36,13 @@ Läuft im Browser auf Handy und Tablet, lässt sich wie eine App installieren un
 node tests/kasse.test.js
 ```
 Braucht Playwright mit Chromium. Der Test startet einen eigenen kleinen Webserver und prüft Verkauf, Pfand, Rückgeld, Storno, zwei Geräte mit QR-Austausch, CSV, Produkte übertragen, Tag abschließen und den Offline-Betrieb.
+
+## Android-App
+Die gleiche Kasse gibt es als eigenständige Android-App (Capacitor), komplett offline, ohne Browser.
+
+- **Herunterladen:** unter [Releases](https://github.com/ThePhantom410/markt-kasse/releases) die neueste `Standkasse-vNN.apk` aufs Gerät laden und öffnen. Beim ersten Mal „Installation aus unbekannten Quellen“ für den Browser bzw. Dateimanager erlauben.
+- **Updates:** neue APK einfach drüber installieren – Daten bleiben erhalten (gleicher Schlüssel).
+- **Daten:** Die App hat ihren eigenen Speicher, getrennt von der Web-App. Produkte per QR-Code übertragen.
+- **Bauen:** GitHub Actions (`.github/workflows/android.yml`) baut bei jedem Push auf `main` und legt das Release `vNN` an (NN = `APP_VERSION`). Dafür braucht das Repo die Secrets `STANDKASSE_KEYSTORE_BASE64` und `STANDKASSE_KEYSTORE_PASSWORD`. **Den Schlüssel sicher aufbewahren** – ohne ihn lassen sich keine Updates mehr installieren.
+- **Lokal bauen:** `npm install`, `npm run sync`, dann in `android/` mit gesetzten `STANDKASSE_KEYSTORE` (Pfad) und `STANDKASSE_KEYSTORE_PASSWORD` `./gradlew assembleRelease`. Icons und Startbilder neu erzeugen: `node scripts/android-icons.js`.
+- **Neue Version:** wie oben `APP_VERSION` usw. hochzählen – daraus wird auch die Android-Versionsnummer.

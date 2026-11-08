@@ -45,6 +45,14 @@ h2:first-child { margin-top: 4px; }
 .num { font-variant-numeric: tabular-nums; }
 .right { text-align: right; }
 
+/* Kopfzeile */
+#brand {
+  display: flex; align-items: baseline; gap: 8px; max-width: 1200px; margin: 0 auto;
+  padding: calc(10px + env(safe-area-inset-top)) 14px 0;
+}
+#brand .logo { font-size: 1.35rem; font-weight: 900; letter-spacing: -.02em; color: var(--accent); }
+#brand .by { font-size: .8rem; color: var(--muted); font-style: italic; }
+
 /* Tabs */
 #tabs {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;

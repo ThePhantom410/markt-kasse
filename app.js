@@ -1,7 +1,7 @@
 'use strict';
-/* Markt-Kasse – Rechenhilfe für den Marktstand. Alle Beträge in Cent. */
+/* Cashito by Antonio Reyes – Rechenhilfe für den Marktstand. Alle Beträge in Cent. */
 
-const APP_VERSION = 1;
+const APP_VERSION = 2;
 const KEY = 'marktKasse.v1';
 const COLORS = ['#1f6f8b', '#c0392b', '#d35400', '#b9770e', '#1e8449', '#117a65', '#6c3483', '#2c3e50', '#a93226', '#7d6608'];
 const MONEY = [500, 1000, 2000, 5000, 100, 200, 50, 20];
@@ -221,10 +221,10 @@ function importProducts(o) {
 }
 function handlePayload(text) {
   let o;
-  try { o = JSON.parse(text); } catch (e) { toast('Das ist kein Markt-Kasse-Code'); return false; }
+  try { o = JSON.parse(text); } catch (e) { toast('Das ist kein Cashito-Code'); return false; }
   if (validReport(o)) { importReport(o); return true; }
   if (validProducts(o)) { importProducts(o); return true; }
-  toast('Das ist kein Markt-Kasse-Code');
+  toast('Das ist kein Cashito-Code');
   return false;
 }
 function qrImage(text) {
@@ -517,7 +517,7 @@ function viewEinstellungen() {
 
     <h2>Über</h2>
     <div class="card">
-      <p style="margin-top:0"><b>Markt-Kasse</b> · Version ${APP_VERSION}</p>
+      <p style="margin-top:0"><b>Cashito</b> by Antonio Reyes · Version ${APP_VERSION}</p>
       <p class="muted small">Nur eine <b>Rechenhilfe</b>, keine Registrierkasse (keine TSE). Alle Daten bleiben auf diesem Gerät. Die App funktioniert auch ohne Internet.</p>
       <button class="btn danger" data-act="reset">Alles zurücksetzen</button>
     </div>`;

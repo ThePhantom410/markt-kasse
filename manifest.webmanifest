@@ -1,7 +1,7 @@
 {
-  "name": "Markt-Kasse",
-  "short_name": "Kasse",
-  "description": "Rechenhilfe-Kasse für den Marktstand",
+  "name": "Cashito by Antonio Reyes",
+  "short_name": "Cashito",
+  "description": "Cashito by Antonio Reyes – Rechenhilfe-Kasse für den Marktstand",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

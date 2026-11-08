@@ -1,5 +1,5 @@
 /* Offline-Cache: App-Dateien kommen aus dem Cache, im Hintergrund wird nach Updates geschaut. */
-const CACHE = 'markt-kasse-v1';
+const CACHE = 'cashito-v2';
 const FILES = ['./', 'index.html', 'style.css', 'app.js', 'vendor/qrcode.js', 'vendor/jsQR.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png'];
 
 self.addEventListener('install', e => {

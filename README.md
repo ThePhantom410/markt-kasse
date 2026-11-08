@@ -1,4 +1,4 @@
-# Markt-Kasse
+# Cashito by Antonio Reyes
 
 Rechenhilfe-Kasse für den Marktstand: Produkte antippen, Summe und Rückgeld ablesen – kein Kopfrechnen mehr.
 Läuft im Browser auf Handy und Tablet, lässt sich wie eine App installieren und funktioniert **offline**.
@@ -29,7 +29,7 @@ Läuft im Browser auf Handy und Tablet, lässt sich wie eine App installieren un
 - Reines HTML/CSS/JavaScript ohne Build-Schritt: `index.html`, `style.css`, `app.js`, Service Worker `sw.js`
 - Daten in `localStorage` (`marktKasse.v1`), Beträge intern in Cent
 - QR-Codes: [qrcode-generator](https://github.com/kazuhikoarase/qrcode-generator) (MIT) erzeugt, gelesen per `BarcodeDetector` oder [jsQR](https://github.com/cozmo/jsQR) (Apache-2.0, `vendor/jsQR.LICENSE`)
-- **Neue Version:** `APP_VERSION` in `app.js` und `CACHE` in `sw.js` zusammen hochzählen, sonst bleibt auf den Geräten die alte Version im Cache.
+- **Neue Version:** `APP_VERSION` in `app.js` und die Nummer in `CACHE` in `sw.js` zusammen hochzählen, sonst bleibt auf den Geräten die alte Version im Cache.
 
 ## Tests
 ```

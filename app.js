@@ -1,7 +1,7 @@
 'use strict';
 /* Standkasse by Antonio Reyes – Rechenhilfe für den Marktstand. Alle Beträge in Cent. */
 
-const APP_VERSION = 3;
+const APP_VERSION = 4;
 const KEY = 'marktKasse.v1';
 const COLORS = ['#1f6f8b', '#c0392b', '#d35400', '#b9770e', '#1e8449', '#117a65', '#6c3483', '#2c3e50', '#a93226', '#7d6608'];
 const MONEY = [500, 1000, 2000, 5000, 100, 200, 50, 20];

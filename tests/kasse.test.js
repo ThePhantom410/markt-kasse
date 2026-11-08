@@ -42,6 +42,7 @@ const sum = page => page.textContent('#sum').then(euro);
   const d1 = await device(browser, url, 'Kasse 1', { width: 390, height: 844 });
   const p1 = d1.page;
   ok((await p1.$$('.prod')).length === 7, '7 Produkte aus der Karte');
+  ok((await p1.locator('#brand .mark').boundingBox()).width === 34, 'Logo in der Kopfzeile ist klein (34 px)');
 
   await tapProd(p1, 'Pulled Pork Semmel');
   await tapProd(p1, 'Pulled Pork Semmel');

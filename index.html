@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <title>Markt-Kasse</title>
+  <meta name="description" content="Rechenhilfe-Kasse für den Marktstand">
+  <meta name="theme-color" content="#1f6f8b">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app"></main>
+  <nav id="tabs">
+    <button data-tab="kasse">🧾<span>Kasse</span></button>
+    <button data-tab="abrechnung">📊<span>Abrechnung</span></button>
+    <button data-tab="einstellungen">⚙️<span>Einstellungen</span></button>
+  </nav>
+  <div id="sheet" hidden></div>
+  <div id="toast" hidden></div>
+  <script src="vendor/qrcode.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

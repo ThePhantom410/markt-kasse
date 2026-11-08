@@ -1,7 +1,7 @@
 /* Offline-Cache: erst das Netz fragen (mit kurzer Wartezeit), sonst aus dem Cache.
    So bekommt man online immer die aktuelle Version und offline die zuletzt geladene. */
-const CACHE = 'standkasse-v4';
-const FILES = ['./', 'index.html', 'style.css?v=4', 'app.js?v=4', 'icon.svg?v=4', 'vendor/qrcode.js', 'vendor/jsQR.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png'];
+const CACHE = 'standkasse-v5';
+const FILES = ['./', 'index.html', 'style.css?v=5', 'app.js?v=5', 'icon.svg?v=5', 'vendor/qrcode.js', 'vendor/jsQR.js', 'manifest.webmanifest', 'icon.svg', 'icon-192.png', 'icon-512.png'];
 const WAIT_MS = 3000;
 
 self.addEventListener('install', e => {

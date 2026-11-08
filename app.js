@@ -1,7 +1,7 @@
 'use strict';
 /* Standkasse by Antonio Reyes – Rechenhilfe für den Marktstand. Alle Beträge in Cent. */
 
-const APP_VERSION = 4;
+const APP_VERSION = 5;
 const KEY = 'marktKasse.v1';
 const COLORS = ['#1f6f8b', '#c0392b', '#d35400', '#b9770e', '#1e8449', '#117a65', '#6c3483', '#2c3e50', '#a93226', '#7d6608'];
 const MONEY = [500, 1000, 2000, 5000, 100, 200, 50, 20];
@@ -384,7 +384,7 @@ function viewKasse() {
   const notToday = S.day.date !== today() && S.day.sales.length
     ? `<div class="note">Der Tag ${dateDe(S.day.date)} ist noch nicht abgeschlossen. Unter <b>Abrechnung</b> abschließen, bevor du heute verkaufst.</div>` : '';
   const setup = !S.device.name
-    ? `<div class="note">Gib diesem Gerät unter <b>Einstellungen</b> einen Namen (z. B. „Kasse 1“), damit die Abrechnungen später zuordenbar sind.</div>` : '';
+    ? `<div class="note">Gib diesem Gerät unter <b>Einstellungen</b> einen Namen (z. B. „Kasse 1“), damit du später in der Abrechnung siehst, welches Gerät was verkauft hat.</div>` : '';
   return `${notToday}${setup}<div class="kasse">
     <div>
       <div class="products">
